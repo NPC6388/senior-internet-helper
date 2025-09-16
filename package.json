@@ -1,0 +1,13 @@
+{
+  "name": "noob-ai",
+  "version": "1.0.0",
+  "description": "AI assistant to help elderly people use the internet safely and easily",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": ["ai", "assistant", "elderly", "senior", "internet", "help"],
+  "author": "",
+  "license": "MIT"
+}

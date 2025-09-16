@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Helper AI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Your Internet Helper & Search Assistant</h1>
+            <p>Ask me anything! I can search the web, explain how things work, and guide you step-by-step.</p>
+        </header>
+
+        <main>
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message ai-message">
+                        <div class="message-content">
+                            Hello! I'm your friendly internet assistant and search helper. I can help you with:
+                            <ul>
+                                <li><strong>Search the web</strong> - Just ask me anything like "What's the weather today?" or "How do I bake a cake?"</li>
+                                <li><strong>Step-by-step guides</strong> - I'll walk you through tasks like "How do I send a photo by email?"</li>
+                                <li><strong>Internet safety</strong> - Learn to stay safe from scams and suspicious websites</li>
+                                <li><strong>Using technology</strong> - Get help with social media, video calls, and online shopping</li>
+                                <li><strong>Simple explanations</strong> - I'll explain things in easy-to-understand language</li>
+                            </ul>
+                            Try asking: "What's the weather like?" or "How do I video call my grandchildren?"
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Ask me anything or search the web..."
+                        autofocus
+                    >
+                    <button id="send-button">Send</button>
+                    <button id="voice-button" title="Click to speak">🎤</button>
+                </div>
+            </div>
+
+            <div class="quick-help">
+                <h3>Quick Help Topics:</h3>
+                <div class="help-buttons">
+                    <button class="help-btn" data-topic="how-to-email-photos">How to Email Photos</button>
+                    <button class="help-btn" data-topic="how-to-video-call">How to Video Call</button>
+                    <button class="help-btn" data-topic="online-shopping">Safe Online Shopping</button>
+                    <button class="help-btn" data-topic="weather-search">Check the Weather</button>
+                    <button class="help-btn" data-topic="find-recipes">Find Recipes</button>
+                    <button class="help-btn" data-topic="scam-prevention">Avoid Scams</button>
+                    <button class="help-btn" data-topic="basic-computer">Computer Basics</button>
+                    <button class="help-btn" data-topic="internet-basics">Internet Basics</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
