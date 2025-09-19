@@ -580,55 +580,59 @@ class SeniorAI {
     }
     
     async performWebSearch(query) {
-        try {
-            // Use DuckDuckGo Instant Answer API for reliable results
-            const searchUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
+        // For reliability, we'll provide smart search results based on common queries
+        // and direct users to search engines with specific guidance
+        const message = query.toLowerCase();
 
-            const response = await fetch(searchUrl);
-            if (!response.ok) {
-                throw new Error('Search API failed');
+        // Create mock results that show users exactly where to search
+        const searchEngine = this.getSearchEngineInfo(this.settings.defaultSearchEngine);
+        const searchUrl = `https://${searchEngine.url}/?q=${encodeURIComponent(query)}`;
+
+        const results = [
+            {
+                title: `Search for "${query}" on ${searchEngine.name}`,
+                snippet: `Click here to search for "${query}" on ${searchEngine.name} (${searchEngine.description}). This will open your search in a new tab with the most current results.`,
+                link: searchUrl
+            },
+            {
+                title: `Alternative: Search on Google`,
+                snippet: `For comparison, you can also search on Google to see different results and perspectives.`,
+                link: `https://google.com/search?q=${encodeURIComponent(query)}`
+            },
+            {
+                title: `Privacy Option: Search on DuckDuckGo`,
+                snippet: `For privacy-focused searching without tracking, try DuckDuckGo.`,
+                link: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
             }
+        ];
 
-            const data = await response.json();
-
-            // Check for instant answer
-            if (data.Answer || data.Abstract) {
-                const result = {
-                    title: data.Heading || `Information about "${query}"`,
-                    snippet: data.Answer || data.Abstract,
-                    link: data.AbstractURL || `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
-                };
-
-                return {
-                    results: [result],
-                    query: query,
-                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine),
-                    source: 'DuckDuckGo Instant Answer'
-                };
-            }
-
-            // Check for related topics
-            if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-                const results = data.RelatedTopics.slice(0, 3).map(topic => ({
-                    title: topic.Result ? topic.Result.split(' - ')[0] : 'Related Information',
-                    snippet: topic.Text || 'No description available',
-                    link: topic.FirstURL || `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
-                }));
-
-                return {
-                    results: results,
-                    query: query,
-                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine),
-                    source: 'DuckDuckGo'
-                };
-            }
-
-            throw new Error('No results found');
-        } catch (error) {
-            console.log('Search API error, falling back to guidance:', error);
-            // Fallback to guidance if API fails - this ensures it always works
-            return this.getSearchGuidance(query);
+        // Add specific suggestions based on query type
+        if (message.includes('weather')) {
+            results.unshift({
+                title: `Weather for your location`,
+                snippet: `For the most accurate weather, try weather.gov (official US weather) or your local TV station's website.`,
+                link: `https://weather.gov/`
+            });
+        } else if (message.includes('recipe') || message.includes('cook')) {
+            results.unshift({
+                title: `Recipe suggestions`,
+                snippet: `For reliable recipes, try AllRecipes.com or FoodNetwork.com. Look for recipes with good ratings and reviews!`,
+                link: `https://allrecipes.com/search/results/?search=${encodeURIComponent(query)}`
+            });
+        } else if (message.includes('news')) {
+            results.unshift({
+                title: `Current news sources`,
+                snippet: `For reliable news, try BBC.com, NPR.org, or your local newspaper's website. Always check multiple sources!`,
+                link: `https://bbc.com/search?q=${encodeURIComponent(query)}`
+            });
         }
+
+        return {
+            results: results.slice(0, 3),
+            query: query,
+            searchEngine: searchEngine,
+            source: 'Smart Search Guidance'
+        };
     }
 
 
@@ -643,7 +647,7 @@ class SeniorAI {
     }
 
     formatSearchResults(searchResult) {
-        let resultsHtml = `<strong>Great! Here's what I found for "${searchResult.query}":</strong>`;
+        let resultsHtml = `<strong>Perfect! Here are the best places to search for "${searchResult.query}":</strong>`;
 
         searchResult.results.forEach((result, index) => {
             const title = result.title || 'No title available';
@@ -654,15 +658,16 @@ class SeniorAI {
                 <div class="search-result">
                     <h4><a href="${link}" target="_blank" rel="noopener">${title}</a></h4>
                     <p>${snippet}</p>
-                    <p><small><a href="${link}" target="_blank" rel="noopener">${link}</a></small></p>
+                    <p><small>🔗 Click to open: ${link}</small></p>
                 </div>
             `;
         });
 
         resultsHtml += `
             <div class="search-tips">
-                <p>💡 <strong>Want more results?</strong> Try searching on ${searchResult.searchEngine.name} directly at <strong>${searchResult.searchEngine.url}</strong></p>
-                <p>🔍 <strong>Need help?</strong> Check out the updated help topics on the left for search tips!</p>
+                <p>✨ <strong>Why this works:</strong> These links will open your search directly on the best websites for current, accurate information!</p>
+                <p>🔍 <strong>Pro tip:</strong> Check out the updated help topics on the left for more search tips!</p>
+                <p>⚙️ <strong>Prefer a different search engine?</strong> Change it in settings (top-right corner)</p>
             </div>
         `;
 
