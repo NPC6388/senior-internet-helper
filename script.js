@@ -406,8 +406,8 @@ class SeniorAI {
     }
     
     async performWebSearch(query) {
-        // For now, we'll guide users to search engines rather than trying to integrate APIs
-        // This avoids API keys, CORS issues, and source bias
+        // We guide users to search engines rather than providing filtered results
+        // This approach avoids API dependencies, bias, and teaches digital literacy
         return this.getSearchGuidance(query);
     }
 
@@ -458,30 +458,12 @@ class SeniorAI {
     }
 
     async handleSearchQuery(query) {
-        // Get search results from Brave
+        // Get search guidance
         const searchResult = await this.performWebSearch(query);
 
-        if (searchResult) {
-            if (searchResult.results) {
-                // Display actual search results
-                let resultsHtml = `<strong>Here's what I found for "${query}":</strong>`;
-
-                searchResult.results.forEach((result, index) => {
-                    resultsHtml += `
-                        <div class="search-result">
-                            <h4><a href="${result.url}" target="_blank" rel="noopener">${result.title}</a></h4>
-                            <p>${result.description}</p>
-                            <p><small><a href="${result.url}" target="_blank" rel="noopener">${result.url}</a></small></p>
-                        </div>
-                    `;
-                });
-
-                resultsHtml += `<p>💡 <strong>Need help with something else?</strong> Ask me another question or use those handy buttons on the left!</p>`;
-                return resultsHtml;
-            } else if (searchResult.isGuidance) {
-                // For guidance responses (fallback), provide step-by-step help
-                return this.getEnhancedGuidance(query, searchResult);
-            }
+        if (searchResult && searchResult.isGuidance) {
+            // Provide step-by-step search guidance
+            return this.getEnhancedGuidance(query, searchResult);
         }
 
         // Fallback to instructional responses if search fails
