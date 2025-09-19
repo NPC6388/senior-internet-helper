@@ -581,8 +581,8 @@ class SeniorAI {
     
     async performWebSearch(query) {
         try {
-            // Use a free search API to get actual results
-            const searchUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=demo&num=4`;
+            // Use DuckDuckGo Instant Answer API for reliable results
+            const searchUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
 
             const response = await fetch(searchUrl);
             if (!response.ok) {
@@ -591,18 +591,42 @@ class SeniorAI {
 
             const data = await response.json();
 
-            if (data.organic_results && data.organic_results.length > 0) {
+            // Check for instant answer
+            if (data.Answer || data.Abstract) {
+                const result = {
+                    title: data.Heading || `Information about "${query}"`,
+                    snippet: data.Answer || data.Abstract,
+                    link: data.AbstractURL || `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
+                };
+
                 return {
-                    results: data.organic_results.slice(0, 3),
+                    results: [result],
                     query: query,
-                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine)
+                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine),
+                    source: 'DuckDuckGo Instant Answer'
+                };
+            }
+
+            // Check for related topics
+            if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+                const results = data.RelatedTopics.slice(0, 3).map(topic => ({
+                    title: topic.Result ? topic.Result.split(' - ')[0] : 'Related Information',
+                    snippet: topic.Text || 'No description available',
+                    link: topic.FirstURL || `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
+                }));
+
+                return {
+                    results: results,
+                    query: query,
+                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine),
+                    source: 'DuckDuckGo'
                 };
             }
 
             throw new Error('No results found');
         } catch (error) {
             console.log('Search API error, falling back to guidance:', error);
-            // Fallback to guidance if API fails
+            // Fallback to guidance if API fails - this ensures it always works
             return this.getSearchGuidance(query);
         }
     }
