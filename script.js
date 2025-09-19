@@ -74,8 +74,8 @@ class SeniorAI {
         this.addMessage(message, 'user');
         this.userInput.value = '';
         
-        setTimeout(() => {
-            const response = this.generateResponse(message);
+        setTimeout(async () => {
+            const response = await this.generateResponse(message);
             this.addMessage(response, 'ai');
         }, 500);
     }
@@ -94,12 +94,12 @@ class SeniorAI {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
     
-    generateResponse(userMessage) {
+    async generateResponse(userMessage) {
         const message = userMessage.toLowerCase();
-        
+
         // Check if this is a search-like query (questions about facts, weather, etc.)
         if (this.isSearchQuery(message)) {
-            return this.handleSearchQuery(userMessage);
+            return await this.handleSearchQuery(userMessage);
         }
         
         // Check if this is a how-to question
@@ -273,8 +273,8 @@ class SeniorAI {
         const question = topics[topic] || 'Can you help me?';
         this.addMessage(question, 'user');
         
-        setTimeout(() => {
-            const response = this.generateResponse(question);
+        setTimeout(async () => {
+            const response = await this.generateResponse(question);
             this.addMessage(response, 'ai');
         }, 500);
     }
@@ -311,8 +311,156 @@ class SeniorAI {
         return howToIndicators.some(indicator => message.includes(indicator));
     }
     
-    handleSearchQuery(query) {
-        // Common search responses with simple, helpful information
+    async performWebSearch(query) {
+        try {
+            // Try Wikipedia API first for factual queries
+            if (this.isFactualQuery(query)) {
+                const wikiResult = await this.searchWikipedia(query);
+                if (wikiResult) return wikiResult;
+            }
+
+            // For weather queries, provide current weather guidance
+            if (query.toLowerCase().includes('weather')) {
+                return await this.getWeatherGuidance(query);
+            }
+
+            // For other queries, provide smart search guidance
+            return this.getSearchGuidance(query);
+        } catch (error) {
+            console.log('Search error:', error);
+            return null;
+        }
+    }
+
+    isFactualQuery(query) {
+        const factualIndicators = [
+            'what is', 'who is', 'when was', 'where is', 'how many', 'how much',
+            'define', 'meaning of', 'history of', 'capital of', 'population of'
+        ];
+        const lowerQuery = query.toLowerCase();
+        return factualIndicators.some(indicator => lowerQuery.includes(indicator));
+    }
+
+    async searchWikipedia(query) {
+        try {
+            // Clean up the query for Wikipedia
+            const searchTerm = query.replace(/^(what is|who is|when was|where is|define|meaning of)\s*/i, '');
+            const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`;
+
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error('Wikipedia search failed');
+
+            const data = await response.json();
+
+            if (data.extract) {
+                return {
+                    answer: data.extract,
+                    source: data.content_urls?.desktop?.page || 'Wikipedia',
+                    title: data.title || 'Wikipedia Result'
+                };
+            }
+
+            return null;
+        } catch (error) {
+            console.log('Wikipedia search failed:', error);
+            return null;
+        }
+    }
+
+    async getWeatherGuidance(query) {
+        return {
+            answer: `I can't check the current weather for you directly, but I can show you the best ways to get accurate weather information right now!`,
+            source: 'Weather Guidance',
+            title: 'How to Check Current Weather',
+            isGuidance: true
+        };
+    }
+
+    getSearchGuidance(query) {
+        return {
+            answer: `I'll help you search for "${query}" using the best websites and search engines!`,
+            source: 'Search Guidance',
+            title: 'Let me guide your search',
+            isGuidance: true
+        };
+    }
+
+    getEnhancedGuidance(query, searchResult) {
+        const message = query.toLowerCase();
+
+        if (message.includes('weather')) {
+            return `
+                <strong>Let me help you check the current weather!</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">1.</span>
+                        <span class="step-text">Go to <strong>weather.com</strong> or <strong>weather.gov</strong> - these are the most reliable</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2.</span>
+                        <span class="step-text">Type your city and state in the search box</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3.</span>
+                        <span class="step-text">You'll see current temperature, conditions, and a 7-day forecast</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4.</span>
+                        <span class="step-text">Check the hourly forecast if you're planning to go out</span>
+                    </div>
+                </div>
+                💡 <strong>Quick tip:</strong> If you have a smartphone, just ask Siri "What's the weather?" or say "Hey Google, what's the weather today?"
+            `;
+        }
+
+        // General search guidance
+        return `
+            <strong>Let me help you search for "${query}" online!</strong>
+            <div class="step-guide">
+                <div class="step">
+                    <span class="step-number">1.</span>
+                    <span class="step-text">Open <strong>google.com</strong> in your web browser</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">2.</span>
+                    <span class="step-text">Type "${query}" in the search box</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3.</span>
+                    <span class="step-text">Look for results from trusted websites (.gov, .edu, or well-known organizations)</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4.</span>
+                    <span class="step-text">Click on a result that looks reliable and read the information</span>
+                </div>
+            </div>
+            💡 <strong>Pro tip:</strong> If you need current information, add "2024" or "latest" to your search!
+        `;
+    }
+
+    async handleSearchQuery(query) {
+        // First try to get real search results
+        const searchResult = await this.performWebSearch(query);
+
+        if (searchResult) {
+            if (searchResult.isGuidance) {
+                // For guidance responses, provide enhanced step-by-step help
+                return this.getEnhancedGuidance(query, searchResult);
+            } else {
+                // For actual results (like Wikipedia), display them nicely
+                return `
+                    <strong>Great question! Here's what I found about "${query}":</strong>
+                    <div class="search-result">
+                        <h4>${searchResult.title}</h4>
+                        <p>${searchResult.answer}</p>
+                        <p><small>Source: <a href="${searchResult.source}" target="_blank" rel="noopener">Read more on ${searchResult.source}</a></small></p>
+                    </div>
+                    <p>💡 <strong>Want to learn more?</strong> Ask me another question or click those helpful buttons on the left!</p>
+                `;
+            }
+        }
+
+        // Fallback to instructional responses if search fails
         const message = query.toLowerCase();
         
         if (message.includes('weather')) {
