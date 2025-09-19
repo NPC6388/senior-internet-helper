@@ -312,123 +312,83 @@ class SeniorAI {
     }
     
     async performWebSearch(query) {
-        try {
-            // For weather queries, provide current weather guidance
-            if (query.toLowerCase().includes('weather')) {
-                return await this.getWeatherGuidance(query);
-            }
-
-            // For all other queries, provide smart search guidance to reliable sources
-            return this.getSearchGuidance(query);
-        } catch (error) {
-            console.log('Search error:', error);
-            return null;
-        }
+        // For now, we'll guide users to search engines rather than trying to integrate APIs
+        // This avoids API keys, CORS issues, and source bias
+        return this.getSearchGuidance(query);
     }
 
-
-    async getWeatherGuidance(query) {
-        return {
-            answer: `I can't check the current weather for you directly, but I can show you the best ways to get accurate weather information right now!`,
-            source: 'Weather Guidance',
-            title: 'How to Check Current Weather',
-            isGuidance: true
-        };
-    }
 
     getSearchGuidance(query) {
         return {
-            answer: `I'll help you search for "${query}" using the best websites and search engines!`,
+            answer: `Let me show you how to search for "${query}" so you can get the most current and unbiased information!`,
             source: 'Search Guidance',
-            title: 'Let me guide your search',
-            isGuidance: true
+            title: 'How to search for this information',
+            isGuidance: true,
+            query: query
         };
     }
 
     getEnhancedGuidance(query, searchResult) {
-        const message = query.toLowerCase();
-
-        if (message.includes('weather')) {
-            return `
-                <strong>Let me help you check the current weather!</strong>
-                <div class="step-guide">
-                    <div class="step">
-                        <span class="step-number">1.</span>
-                        <span class="step-text">Go to <strong>weather.com</strong> or <strong>weather.gov</strong> - these are the most reliable</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2.</span>
-                        <span class="step-text">Type your city and state in the search box</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3.</span>
-                        <span class="step-text">You'll see current temperature, conditions, and a 7-day forecast</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">4.</span>
-                        <span class="step-text">Check the hourly forecast if you're planning to go out</span>
-                    </div>
-                </div>
-                💡 <strong>Quick tip:</strong> If you have a smartphone, just ask Siri "What's the weather?" or say "Hey Google, what's the weather today?"
-            `;
-        }
-
-        // Enhanced search guidance with diverse reliable sources
         return `
-            <strong>Great question! Let me help you find reliable information about "${query}"</strong>
+            <strong>Perfect! Let me walk you through searching for "${query}" step by step:</strong>
             <div class="step-guide">
                 <div class="step">
                     <span class="step-number">1.</span>
-                    <span class="step-text">Start with <strong>google.com</strong> and search for "${query}"</span>
+                    <span class="step-text">Open your web browser (Chrome, Safari, Firefox, or Edge)</span>
                 </div>
                 <div class="step">
                     <span class="step-number">2.</span>
-                    <span class="step-text">Look for these trusted sources first:</span>
+                    <span class="step-text">Try these search engines - they all give different results:</span>
                 </div>
                 <div class="step">
-                    <span class="step-number">📚</span>
-                    <span class="step-text"><strong>Government sites</strong> (.gov) - Most reliable for official information</span>
+                    <span class="step-number">🔍</span>
+                    <span class="step-text"><strong>brave.com</strong> - Privacy-focused, no tracking</span>
                 </div>
                 <div class="step">
-                    <span class="step-number">🎓</span>
-                    <span class="step-text"><strong>Educational sites</strong> (.edu) - Universities and academic institutions</span>
+                    <span class="step-number">🔍</span>
+                    <span class="step-text"><strong>google.com</strong> - Most comprehensive results</span>
                 </div>
                 <div class="step">
-                    <span class="step-number">📰</span>
-                    <span class="step-text"><strong>Reputable news sources</strong> - BBC, NPR, Reuters, AP News</span>
-                </div>
-                <div class="step">
-                    <span class="step-number">🔬</span>
-                    <span class="step-text"><strong>Professional organizations</strong> - Medical associations, scientific societies</span>
+                    <span class="step-number">🔍</span>
+                    <span class="step-text"><strong>bing.com</strong> - Good alternative perspective</span>
                 </div>
                 <div class="step">
                     <span class="step-number">3.</span>
-                    <span class="step-text">Always check multiple sources - don't rely on just one!</span>
+                    <span class="step-text">Type "${query}" in the search box and press Enter</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">4.</span>
+                    <span class="step-text">Read information from several different websites to compare</span>
                 </div>
             </div>
-            💡 <strong>Smart tip:</strong> Be skeptical of dramatic headlines or claims that seem too good to be true. When in doubt, ask me or call the family!
+            💡 <strong>Smart approach:</strong> Different search engines may show different results, so it's good to try more than one! If you get stuck, just ask me for help!
         `;
     }
 
     async handleSearchQuery(query) {
-        // First try to get real search results
+        // Get search results from Brave
         const searchResult = await this.performWebSearch(query);
 
         if (searchResult) {
-            if (searchResult.isGuidance) {
-                // For guidance responses, provide enhanced step-by-step help
+            if (searchResult.results) {
+                // Display actual search results
+                let resultsHtml = `<strong>Here's what I found for "${query}":</strong>`;
+
+                searchResult.results.forEach((result, index) => {
+                    resultsHtml += `
+                        <div class="search-result">
+                            <h4><a href="${result.url}" target="_blank" rel="noopener">${result.title}</a></h4>
+                            <p>${result.description}</p>
+                            <p><small><a href="${result.url}" target="_blank" rel="noopener">${result.url}</a></small></p>
+                        </div>
+                    `;
+                });
+
+                resultsHtml += `<p>💡 <strong>Need help with something else?</strong> Ask me another question or use those handy buttons on the left!</p>`;
+                return resultsHtml;
+            } else if (searchResult.isGuidance) {
+                // For guidance responses (fallback), provide step-by-step help
                 return this.getEnhancedGuidance(query, searchResult);
-            } else {
-                // For actual results (like Wikipedia), display them nicely
-                return `
-                    <strong>Great question! Here's what I found about "${query}":</strong>
-                    <div class="search-result">
-                        <h4>${searchResult.title}</h4>
-                        <p>${searchResult.answer}</p>
-                        <p><small>Source: <a href="${searchResult.source}" target="_blank" rel="noopener">Read more on ${searchResult.source}</a></small></p>
-                    </div>
-                    <p>💡 <strong>Want to learn more?</strong> Ask me another question or click those helpful buttons on the left!</p>
-                `;
             }
         }
 
