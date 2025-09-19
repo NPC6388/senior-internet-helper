@@ -313,18 +313,12 @@ class SeniorAI {
     
     async performWebSearch(query) {
         try {
-            // Try Wikipedia API first for factual queries
-            if (this.isFactualQuery(query)) {
-                const wikiResult = await this.searchWikipedia(query);
-                if (wikiResult) return wikiResult;
-            }
-
             // For weather queries, provide current weather guidance
             if (query.toLowerCase().includes('weather')) {
                 return await this.getWeatherGuidance(query);
             }
 
-            // For other queries, provide smart search guidance
+            // For all other queries, provide smart search guidance to reliable sources
             return this.getSearchGuidance(query);
         } catch (error) {
             console.log('Search error:', error);
@@ -332,40 +326,6 @@ class SeniorAI {
         }
     }
 
-    isFactualQuery(query) {
-        const factualIndicators = [
-            'what is', 'who is', 'when was', 'where is', 'how many', 'how much',
-            'define', 'meaning of', 'history of', 'capital of', 'population of'
-        ];
-        const lowerQuery = query.toLowerCase();
-        return factualIndicators.some(indicator => lowerQuery.includes(indicator));
-    }
-
-    async searchWikipedia(query) {
-        try {
-            // Clean up the query for Wikipedia
-            const searchTerm = query.replace(/^(what is|who is|when was|where is|define|meaning of)\s*/i, '');
-            const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`;
-
-            const response = await fetch(apiUrl);
-            if (!response.ok) throw new Error('Wikipedia search failed');
-
-            const data = await response.json();
-
-            if (data.extract) {
-                return {
-                    answer: data.extract,
-                    source: data.content_urls?.desktop?.page || 'Wikipedia',
-                    title: data.title || 'Wikipedia Result'
-                };
-            }
-
-            return null;
-        } catch (error) {
-            console.log('Wikipedia search failed:', error);
-            return null;
-        }
-    }
 
     async getWeatherGuidance(query) {
         return {
@@ -413,28 +373,40 @@ class SeniorAI {
             `;
         }
 
-        // General search guidance
+        // Enhanced search guidance with diverse reliable sources
         return `
-            <strong>Let me help you search for "${query}" online!</strong>
+            <strong>Great question! Let me help you find reliable information about "${query}"</strong>
             <div class="step-guide">
                 <div class="step">
                     <span class="step-number">1.</span>
-                    <span class="step-text">Open <strong>google.com</strong> in your web browser</span>
+                    <span class="step-text">Start with <strong>google.com</strong> and search for "${query}"</span>
                 </div>
                 <div class="step">
                     <span class="step-number">2.</span>
-                    <span class="step-text">Type "${query}" in the search box</span>
+                    <span class="step-text">Look for these trusted sources first:</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">📚</span>
+                    <span class="step-text"><strong>Government sites</strong> (.gov) - Most reliable for official information</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">🎓</span>
+                    <span class="step-text"><strong>Educational sites</strong> (.edu) - Universities and academic institutions</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">📰</span>
+                    <span class="step-text"><strong>Reputable news sources</strong> - BBC, NPR, Reuters, AP News</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">🔬</span>
+                    <span class="step-text"><strong>Professional organizations</strong> - Medical associations, scientific societies</span>
                 </div>
                 <div class="step">
                     <span class="step-number">3.</span>
-                    <span class="step-text">Look for results from trusted websites (.gov, .edu, or well-known organizations)</span>
-                </div>
-                <div class="step">
-                    <span class="step-number">4.</span>
-                    <span class="step-text">Click on a result that looks reliable and read the information</span>
+                    <span class="step-text">Always check multiple sources - don't rely on just one!</span>
                 </div>
             </div>
-            💡 <strong>Pro tip:</strong> If you need current information, add "2024" or "latest" to your search!
+            💡 <strong>Smart tip:</strong> Be skeptical of dramatic headlines or claims that seem too good to be true. When in doubt, ask me or call the family!
         `;
     }
 
