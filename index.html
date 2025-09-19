@@ -9,8 +9,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>🤖 Your Internet Helper & Search Assistant</h1>
-            <p>Ask me anything! I can search the web, explain how things work, and guide you step-by-step.</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>🤖 Your Internet Helper & Search Assistant</h1>
+                    <p>Ask me anything! I can search the web, explain how things work, and guide you step-by-step.</p>
+                </div>
+                <button id="settings-button" class="settings-btn" title="Settings">⚙️</button>
+            </div>
         </header>
 
         <main class="split-layout">
@@ -67,6 +72,45 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Settings</h2>
+                <button id="close-settings" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="search-engine-select">Default Search Engine:</label>
+                    <select id="search-engine-select">
+                        <option value="brave">Brave (Privacy-focused)</option>
+                        <option value="google">Google</option>
+                        <option value="bing">Bing</option>
+                        <option value="duckduckgo">DuckDuckGo (Privacy-focused)</option>
+                    </select>
+                    <p class="setting-description">Choose which search engine to recommend by default when helping you search.</p>
+                </div>
+
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="large-text-toggle"> Large Text Mode
+                    </label>
+                    <p class="setting-description">Make all text larger for easier reading.</p>
+                </div>
+
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="high-contrast-toggle"> High Contrast Mode
+                    </label>
+                    <p class="setting-description">Use high contrast colors for better visibility.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-settings" class="save-btn">Save Settings</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -5,10 +5,24 @@ class SeniorAI {
         this.sendButton = document.getElementById('send-button');
         this.voiceButton = document.getElementById('voice-button');
         this.helpButtons = document.querySelectorAll('.help-btn');
-        
+        this.settingsButton = document.getElementById('settings-button');
+        this.settingsModal = document.getElementById('settings-modal');
+        this.closeSettingsButton = document.getElementById('close-settings');
+        this.saveSettingsButton = document.getElementById('save-settings');
+        this.searchEngineSelect = document.getElementById('search-engine-select');
+        this.largeTextToggle = document.getElementById('large-text-toggle');
+        this.highContrastToggle = document.getElementById('high-contrast-toggle');
+
         this.isListening = false;
         this.recognition = null;
-        
+
+        // Settings with defaults
+        this.settings = {
+            defaultSearchEngine: 'brave',
+            largeText: false,
+            highContrast: false
+        };
+
         this.init();
     }
     
@@ -26,8 +40,19 @@ class SeniorAI {
         });
         
         this.voiceButton.addEventListener('click', () => this.toggleVoiceRecognition());
-        
+        this.settingsButton.addEventListener('click', () => this.openSettings());
+        this.closeSettingsButton.addEventListener('click', () => this.closeSettings());
+        this.saveSettingsButton.addEventListener('click', () => this.saveSettings());
+
+        // Close modal when clicking outside of it
+        this.settingsModal.addEventListener('click', (e) => {
+            if (e.target === this.settingsModal) {
+                this.closeSettings();
+            }
+        });
+
         this.setupVoiceRecognition();
+        this.loadSettings();
     }
     
     setupVoiceRecognition() {
@@ -53,7 +78,76 @@ class SeniorAI {
             this.voiceButton.style.display = 'none';
         }
     }
-    
+
+    openSettings() {
+        this.settingsModal.classList.remove('hidden');
+        // Update the form with current settings
+        this.searchEngineSelect.value = this.settings.defaultSearchEngine;
+        this.largeTextToggle.checked = this.settings.largeText;
+        this.highContrastToggle.checked = this.settings.highContrast;
+    }
+
+    closeSettings() {
+        this.settingsModal.classList.add('hidden');
+    }
+
+    saveSettings() {
+        // Get values from form
+        this.settings.defaultSearchEngine = this.searchEngineSelect.value;
+        this.settings.largeText = this.largeTextToggle.checked;
+        this.settings.highContrast = this.highContrastToggle.checked;
+
+        // Apply settings
+        this.applySettings();
+
+        // Save to localStorage
+        localStorage.setItem('seniorAI-settings', JSON.stringify(this.settings));
+
+        // Close modal
+        this.closeSettings();
+
+        // Show confirmation
+        this.addMessage("Great! I've saved your settings. Your new preferences are now active!", 'ai');
+    }
+
+    loadSettings() {
+        const savedSettings = localStorage.getItem('seniorAI-settings');
+        if (savedSettings) {
+            try {
+                this.settings = { ...this.settings, ...JSON.parse(savedSettings) };
+            } catch (error) {
+                console.log('Error loading settings:', error);
+            }
+        }
+        this.applySettings();
+    }
+
+    applySettings() {
+        // Apply large text setting
+        if (this.settings.largeText) {
+            document.body.classList.add('large-text');
+        } else {
+            document.body.classList.remove('large-text');
+        }
+
+        // Apply high contrast setting
+        if (this.settings.highContrast) {
+            document.body.classList.add('high-contrast');
+        } else {
+            document.body.classList.remove('high-contrast');
+        }
+    }
+
+    getSearchEngineInfo(engine) {
+        const engines = {
+            brave: { name: 'Brave', url: 'brave.com', description: 'Privacy-focused, no tracking' },
+            google: { name: 'Google', url: 'google.com', description: 'Most comprehensive results' },
+            bing: { name: 'Bing', url: 'bing.com', description: 'Good alternative perspective' },
+            duckduckgo: { name: 'DuckDuckGo', url: 'duckduckgo.com', description: 'Privacy-focused, no tracking' }
+        };
+        return engines[engine] || engines.brave;
+    }
+
     toggleVoiceRecognition() {
         if (!this.recognition) return;
         
@@ -329,6 +423,8 @@ class SeniorAI {
     }
 
     getEnhancedGuidance(query, searchResult) {
+        const defaultEngine = this.getSearchEngineInfo(this.settings.defaultSearchEngine);
+
         return `
             <strong>Perfect! Let me walk you through searching for "${query}" step by step:</strong>
             <div class="step-guide">
@@ -338,19 +434,7 @@ class SeniorAI {
                 </div>
                 <div class="step">
                     <span class="step-number">2.</span>
-                    <span class="step-text">Try these search engines - they all give different results:</span>
-                </div>
-                <div class="step">
-                    <span class="step-number">🔍</span>
-                    <span class="step-text"><strong>brave.com</strong> - Privacy-focused, no tracking</span>
-                </div>
-                <div class="step">
-                    <span class="step-number">🔍</span>
-                    <span class="step-text"><strong>google.com</strong> - Most comprehensive results</span>
-                </div>
-                <div class="step">
-                    <span class="step-number">🔍</span>
-                    <span class="step-text"><strong>bing.com</strong> - Good alternative perspective</span>
+                    <span class="step-text">Go to <strong>${defaultEngine.url}</strong> (${defaultEngine.description})</span>
                 </div>
                 <div class="step">
                     <span class="step-number">3.</span>
@@ -358,10 +442,18 @@ class SeniorAI {
                 </div>
                 <div class="step">
                     <span class="step-number">4.</span>
-                    <span class="step-text">Read information from several different websites to compare</span>
+                    <span class="step-text">Look through the results and click on ones that seem helpful and reliable</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">5.</span>
+                    <span class="step-text">For best results, try searching on different search engines too:</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">🔍</span>
+                    <span class="step-text"><strong>brave.com</strong> - Privacy-focused • <strong>google.com</strong> - Comprehensive • <strong>duckduckgo.com</strong> - No tracking</span>
                 </div>
             </div>
-            💡 <strong>Smart approach:</strong> Different search engines may show different results, so it's good to try more than one! If you get stuck, just ask me for help!
+            💡 <strong>Pro tip:</strong> You can change your default search engine in the settings (⚙️ button) if you want to try a different one!
         `;
     }
 
@@ -644,38 +736,8 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Accessibility enhancements
-function toggleLargeText() {
-    document.body.classList.toggle('large-text');
-    localStorage.setItem('large-text', document.body.classList.contains('large-text'));
-}
-
-function toggleHighContrast() {
-    document.body.classList.toggle('high-contrast');
-    localStorage.setItem('high-contrast', document.body.classList.contains('high-contrast'));
-}
-
-// Load saved preferences
+// Load saved preferences and initialize
 document.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('large-text') === 'true') {
-        document.body.classList.add('large-text');
-    }
-    if (localStorage.getItem('high-contrast') === 'true') {
-        document.body.classList.add('high-contrast');
-    }
-    
     // Initialize the AI assistant
     new SeniorAI();
-});
-
-// Add keyboard shortcuts for accessibility
-document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.key === '+') {
-        e.preventDefault();
-        toggleLargeText();
-    }
-    if (e.ctrlKey && e.key === 'h') {
-        e.preventDefault();
-        toggleHighContrast();
-    }
 });
