@@ -110,93 +110,93 @@ class SeniorAI {
         // Email safety responses
         if (message.includes('email') || message.includes('spam') || message.includes('phishing')) {
             return `
-                <strong>Email Safety Tips:</strong>
+                <strong>Hey! Let me help you stay safe with emails:</strong>
                 <ul>
-                    <li>Never click links in emails from unknown senders</li>
-                    <li>Don't download attachments unless you're expecting them</li>
-                    <li>Be suspicious of emails asking for personal information</li>
-                    <li>Check the sender's email address carefully - scammers often use fake addresses</li>
-                    <li>When in doubt, delete the email or ask a trusted family member</li>
+                    <li>Don't click links from people you don't know - trust me on this one!</li>
+                    <li>If you weren't expecting an attachment, don't download it</li>
+                    <li>If an email asks for personal info, it's probably a scam</li>
+                    <li>Look closely at the sender's email - scammers use fake addresses that look real</li>
+                    <li>When in doubt, just delete it! You can always call me or the family if you're unsure</li>
                 </ul>
-                Remember: Legitimate companies will never ask for passwords via email!
+                Here's the thing - real companies will NEVER ask for your passwords in an email. Promise!
             `;
         }
         
         // Shopping safety
         if (message.includes('shop') || message.includes('buy') || message.includes('purchase')) {
             return `
-                <strong>Safe Online Shopping Tips:</strong>
+                <strong>Alright, let's talk safe online shopping!</strong>
                 <ul>
-                    <li>Only shop on websites that start with "https://" (look for the lock icon)</li>
-                    <li>Use well-known retailers like Amazon, Target, or official brand websites</li>
-                    <li>Never save your credit card information on websites</li>
-                    <li>Check reviews before buying from new websites</li>
-                    <li>Be wary of deals that seem too good to be true</li>
-                    <li>Use PayPal when possible for extra protection</li>
+                    <li>Look for "https://" and a little lock icon - that means it's secure</li>
+                    <li>Stick to the big names like Amazon, Target, or the store's actual website</li>
+                    <li>Never let websites save your credit card - I know it's convenient, but trust me!</li>
+                    <li>Read what other people say about new websites before buying</li>
+                    <li>If a deal looks too amazing to be true, it probably is</li>
+                    <li>PayPal is your friend - use it when you can for extra protection</li>
                 </ul>
-                Always double-check the website address before entering payment information!
+                Quick tip: Always double-check that website address before you type in your card info!
             `;
         }
         
         // Social media help
         if (message.includes('facebook') || message.includes('social') || message.includes('instagram')) {
             return `
-                <strong>Social Media Safety:</strong>
+                <strong>Let's keep you safe on social media!</strong>
                 <ul>
-                    <li>Keep your profile private - only accept friend requests from people you know</li>
-                    <li>Never share personal information like your address or phone number</li>
-                    <li>Be careful about posting when you're away from home</li>
-                    <li>Don't click on suspicious links, even from friends (their account might be hacked)</li>
-                    <li>Report and block anyone who makes you uncomfortable</li>
+                    <li>Keep your profile private and only accept requests from people you actually know</li>
+                    <li>Don't share your address or phone number - keep that stuff private!</li>
+                    <li>Don't post about being away from home while you're still gone</li>
+                    <li>Even if a link comes from a friend, be careful - their account might be hacked</li>
+                    <li>If someone makes you uncomfortable, block them! Don't feel bad about it</li>
                 </ul>
-                Remember: What you post online stays there forever, so think before you share!
+                Here's something important: once you post something online, it's there forever - so always think twice!
             `;
         }
         
         // Video calling help
         if (message.includes('video') || message.includes('call') || message.includes('zoom') || message.includes('skype')) {
             return `
-                <strong>Video Calling Made Easy:</strong>
+                <strong>Video calling is easier than you think!</strong>
                 <ul>
-                    <li><strong>Popular apps:</strong> Zoom, Skype, WhatsApp, FaceTime (iPhone/iPad)</li>
-                    <li>Make sure you have good lighting (face a window if possible)</li>
-                    <li>Test your camera and microphone before important calls</li>
-                    <li>Keep calls with strangers short and never share personal information</li>
-                    <li>Learn how to mute/unmute yourself (usually spacebar or mute button)</li>
+                    <li><strong>Good apps to use:</strong> Zoom, Skype, WhatsApp, or FaceTime if you have an iPhone/iPad</li>
+                    <li>Sit near a window for good lighting - you'll look great!</li>
+                    <li>Test your camera and microphone first so you don't have surprises</li>
+                    <li>Don't share personal info with people you don't know well</li>
+                    <li>Learn where the mute button is - trust me, you'll need it!</li>
                 </ul>
-                Ask a family member to help you set up your first video call - they'll love to help!
+                Pro tip: Ask me or another family member to help you practice - we love spending time with you!
             `;
         }
         
         // Password help
         if (message.includes('password') || message.includes('login') || message.includes('account')) {
             return `
-                <strong>Password Security:</strong>
+                <strong>Let's talk about keeping your passwords safe!</strong>
                 <ul>
-                    <li>Use a different password for each important account</li>
-                    <li>Make passwords at least 12 characters long</li>
-                    <li>Include uppercase, lowercase, numbers, and symbols</li>
-                    <li>Use phrases you'll remember: "MyDog#Fluffy2024!"</li>
-                    <li>Never share passwords with anyone</li>
-                    <li>Consider using your browser's built-in password manager</li>
+                    <li>Use a different password for each important account - I know it's a pain, but it's worth it</li>
+                    <li>Make them at least 12 characters long</li>
+                    <li>Mix it up with uppercase, lowercase, numbers, and symbols</li>
+                    <li>Try phrases you'll remember: "MyDog#Fluffy2024!" or "Coffee&Cookies99!"</li>
+                    <li>Never share passwords with anyone (except maybe write them down for emergencies)</li>
+                    <li>Your browser can remember passwords for you - pretty handy!</li>
                 </ul>
-                Write down important passwords and keep them in a safe place at home!
+                Old school tip: Write down your important passwords and keep them somewhere safe at home!
             `;
         }
         
         // Scam prevention
         if (message.includes('scam') || message.includes('fraud') || message.includes('suspicious')) {
             return `
-                <strong>How to Avoid Scams:</strong>
+                <strong>Listen, scammers are everywhere, but I've got your back!</strong>
                 <ul>
-                    <li>If someone contacts you unexpectedly asking for money or information, it's likely a scam</li>
-                    <li>Government agencies don't call threatening arrest - they send letters</li>
-                    <li>Your bank will never ask for your PIN or full password</li>
-                    <li>Be suspicious of "urgent" requests or "limited time offers"</li>
-                    <li>Never give remote access to your computer to strangers</li>
-                    <li>When in doubt, hang up and call the official number yourself</li>
+                    <li>If someone calls or emails out of the blue asking for money or info, it's probably a scam</li>
+                    <li>The government doesn't call to threaten you - they send boring letters instead</li>
+                    <li>Your bank will NEVER ask for your PIN or full password - ever!</li>
+                    <li>Anything "urgent" or "limited time only" is usually trying to pressure you</li>
+                    <li>Never let strangers control your computer remotely - big red flag!</li>
+                    <li>When in doubt, hang up and call the real number yourself</li>
                 </ul>
-                Trust your instincts - if something feels wrong, it probably is!
+                Trust your gut - if something feels fishy, it probably is! Call me or the family if you're not sure.
             `;
         }
         
@@ -233,28 +233,28 @@ class SeniorAI {
         // General greetings and help
         if (message.includes('hello') || message.includes('hi') || message.includes('help')) {
             return `
-                Hello! I'm here to help you navigate the internet safely and easily. I can help you with:
+                Hey there! I'm so glad you're here! Think of me as your tech-savvy grandson who's always happy to help. I can help you with:
                 <ul>
-                    <li><strong>Searching the web</strong> - Ask me "What's the weather?" or "How do I find recipes?"</li>
-                    <li><strong>Step-by-step guides</strong> - "How do I email photos?" or "How do I video call?"</li>
-                    <li><strong>Internet safety</strong> - Learning to avoid scams and stay secure</li>
-                    <li><strong>Computer basics</strong> - Understanding how to use your computer and the internet</li>
-                    <li><strong>Simple explanations</strong> - I'll explain things in easy-to-understand language</li>
+                    <li><strong>Finding stuff online</strong> - Ask me "What's the weather?" or "How do I find recipes?"</li>
+                    <li><strong>Step-by-step walkthroughs</strong> - "How do I email photos?" or "How do I video call?"</li>
+                    <li><strong>Staying safe online</strong> - I'll teach you how to spot scams and stay secure</li>
+                    <li><strong>Computer basics</strong> - No question is too simple - I promise!</li>
+                    <li><strong>Simple explanations</strong> - I'll break everything down so it makes sense</li>
                 </ul>
-                What would you like to learn about today? You can ask me a question or click one of the quick help buttons below!
+                So, what do you want to figure out today? Ask me anything or click those handy buttons below!
             `;
         }
         
         // Default response
         return `
-            I understand you're asking about "${userMessage}". While I may not have specific information about that topic, here are some general internet safety tips:
+            I hear what you're asking about "${userMessage}", and while I might not have the exact answer, let me share some general tips to keep you safe online:
             <ul>
-                <li>Always be cautious when sharing personal information online</li>
-                <li>If something seems suspicious, ask a trusted family member for help</li>
-                <li>Take your time - there's no need to rush when using the internet</li>
-                <li>Keep your devices updated with the latest security patches</li>
+                <li>Don't share personal info unless you're absolutely sure who you're talking to</li>
+                <li>If something seems weird, just ask me or call one of the kids - we're here for you!</li>
+                <li>Take your time - nobody's rushing you, so don't feel pressured</li>
+                <li>Keep your computer updated when it asks - those updates are important</li>
             </ul>
-            Try asking about email safety, online shopping, social media, video calls, passwords, or scam prevention!
+            Try asking me about email safety, shopping online, social media, video calls, passwords, or avoiding scams!
         `;
     }
     
@@ -336,7 +336,7 @@ class SeniorAI {
                         <span class="step-text">You'll see today's weather and the forecast for the week</span>
                     </div>
                 </div>
-                💡 <strong>Tip:</strong> You can also ask Siri, Alexa, or Google Assistant "What's the weather today?"
+                💡 <strong>Cool trick:</strong> If you have Siri, Alexa, or Google Assistant, just ask "What's the weather today?"
             `;
         }
         
@@ -361,7 +361,7 @@ class SeniorAI {
                         <span class="step-text">Read the reviews to see what other people thought</span>
                     </div>
                 </div>
-                💡 <strong>Tip:</strong> You can print the recipe by pressing Ctrl+P on your keyboard!
+                💡 <strong>Smart move:</strong> Print the recipe by pressing Ctrl+P - then you won't need the computer while cooking!
             `;
         }
         
@@ -382,18 +382,18 @@ class SeniorAI {
                         <span class="step-text">Check multiple sources if a story seems shocking</span>
                     </div>
                 </div>
-                ⚠️ <strong>Warning:</strong> Avoid clicking on sensational headlines or "click-bait" articles!
+                ⚠️ <strong>Watch out:</strong> Avoid those crazy headlines that seem too wild to be true - they're just trying to get clicks!
             `;
         }
         
         // Generic search response
         return `
-            <strong>I'd like to help you search for "${query}"</strong>
-            <p>Here are some safe ways to find information online:</p>
+            <strong>Let me help you search for "${query}"!</strong>
+            <p>Here's how to find good information online:</p>
             <div class="step-guide">
                 <div class="step">
                     <span class="step-number">1.</span>
-                    <span class="step-text">Go to <strong>google.com</strong> or <strong>bing.com</strong></span>
+                    <span class="step-text">Go to <strong>google.com</strong> or <strong>bing.com</strong> (my favorites)</span>
                 </div>
                 <div class="step">
                     <span class="step-number">2.</span>
@@ -401,10 +401,10 @@ class SeniorAI {
                 </div>
                 <div class="step">
                     <span class="step-number">3.</span>
-                    <span class="step-text">Look for results from trusted websites (government sites end in .gov, educational sites end in .edu)</span>
+                    <span class="step-text">Look for trusted websites (government sites end in .gov, schools end in .edu)</span>
                 </div>
             </div>
-            💡 <strong>Tip:</strong> Be specific in your search - instead of "dogs", try "best dog breeds for seniors"
+            💡 <strong>Pro tip:</strong> Be specific - instead of "dogs", try "best dog breeds for seniors" and you'll get better results!
         `;
     }
     
@@ -448,7 +448,7 @@ class SeniorAI {
                         <span class="step-text">Write your message and click "Send"</span>
                     </div>
                 </div>
-                💡 <strong>Tip:</strong> Large photos may take time to send. If sending many photos, consider doing a few at a time!
+                💡 <strong>Heads up:</strong> Big photos take time to send, so if you have lots, maybe send a few at a time!
             `;
         }
         
@@ -485,7 +485,7 @@ class SeniorAI {
                         <span class="step-text">During the call: Click the microphone to mute/unmute, click the camera to turn video on/off</span>
                     </div>
                 </div>
-                💡 <strong>Tip:</strong> Practice with a family member first to get comfortable with the buttons!
+                💡 <strong>My advice:</strong> Practice with us first so you feel confident with all the buttons!
             `;
         }
         
@@ -514,33 +514,33 @@ class SeniorAI {
                         <span class="step-text"><strong>Bookmarks:</strong> Save your favorite websites for easy access later</span>
                     </div>
                 </div>
-                💡 <strong>Remember:</strong> Take your time and don't be afraid to click around - you won't break anything!
+                💡 <strong>Don't worry:</strong> Take your time and don't be afraid to click around - you won't break anything, I promise!
             `;
         }
         
         // Generic how-to response
         return `
-            <strong>I'd love to help you with "${query}"</strong>
-            <p>While I don't have specific steps for that task, here are some general tips:</p>
+            <strong>I'd love to help you figure out "${query}"!</strong>
+            <p>I don't have the exact steps for that one, but here's my general game plan:</p>
             <div class="step-guide">
                 <div class="step">
                     <span class="step-number">1.</span>
-                    <span class="step-text">Break the task into small steps</span>
+                    <span class="step-text">Break it down into small, manageable steps</span>
                 </div>
                 <div class="step">
                     <span class="step-number">2.</span>
-                    <span class="step-text">Ask a family member or friend for help</span>
+                    <span class="step-text">Ask me or another family member for help - we're here for you!</span>
                 </div>
                 <div class="step">
                     <span class="step-number">3.</span>
-                    <span class="step-text">Search online for tutorials (try "how to [your task] for beginners")</span>
+                    <span class="step-text">Try searching online for "how to [your task] for beginners"</span>
                 </div>
                 <div class="step">
                     <span class="step-number">4.</span>
-                    <span class="step-text">Take your time and practice</span>
+                    <span class="step-text">Take your time and don't stress about it</span>
                 </div>
             </div>
-            Try asking me about emailing photos, video calling, or computer basics!
+            Ask me about emailing photos, video calling, or computer basics - those I know really well!
         `;
     }
 }
