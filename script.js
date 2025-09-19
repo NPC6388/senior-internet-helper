@@ -339,6 +339,161 @@ class SeniorAI {
             `;
         }
         
+        // Search-related help responses
+        if (message.includes('search effectively') || message.includes('how do i search')) {
+            return `
+                <strong>Let me teach you how to search like a pro!</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">1.</span>
+                        <span class="step-text"><strong>Be specific:</strong> Instead of "dogs", try "best dog breeds for seniors"</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2.</span>
+                        <span class="step-text"><strong>Use quotes:</strong> Put exact phrases in quotes like "chocolate chip cookie recipe"</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3.</span>
+                        <span class="step-text"><strong>Add the year:</strong> Include "2024" for current information</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4.</span>
+                        <span class="step-text"><strong>Check multiple sources:</strong> Don't trust just one website</span>
+                    </div>
+                </div>
+                💡 <strong>Pro tip:</strong> Try different search engines - they sometimes show different results!
+            `;
+        }
+
+        if (message.includes('change my search engine') || message.includes('change search engine')) {
+            return `
+                <strong>Easy! You can change your search engine in the settings:</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">1.</span>
+                        <span class="step-text">Click the ⚙️ (settings) button at the top-right of this page</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2.</span>
+                        <span class="step-text">Under "Default Search Engine", pick your favorite</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3.</span>
+                        <span class="step-text">Click "Save Settings"</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">4.</span>
+                        <span class="step-text">I'll now recommend your chosen search engine when helping you search!</span>
+                    </div>
+                </div>
+                🔍 <strong>Your options:</strong> Brave (privacy), Google (comprehensive), Bing (alternative), DuckDuckGo (no tracking)
+            `;
+        }
+
+        if (message.includes('evaluate if a source is reliable') || message.includes('evaluate sources')) {
+            return `
+                <strong>Great question! Here's how to spot reliable sources:</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">✅</span>
+                        <span class="step-text"><strong>Look for:</strong> .gov, .edu, established news sites, medical organizations</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">📅</span>
+                        <span class="step-text"><strong>Check the date:</strong> Make sure information is current</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">👤</span>
+                        <span class="step-text"><strong>Who wrote it?</strong> Look for author credentials and expertise</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">🔗</span>
+                        <span class="step-text"><strong>Sources cited:</strong> Good articles reference other reliable sources</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">⚠️</span>
+                        <span class="step-text"><strong>Red flags:</strong> Dramatic headlines, poor grammar, no contact info</span>
+                    </div>
+                </div>
+                💡 <strong>When in doubt:</strong> Check multiple sources or ask a family member!
+            `;
+        }
+
+        if (message.includes('find accurate weather') || message.includes('weather information')) {
+            return `
+                <strong>Here are the most reliable weather sources:</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">🌤️</span>
+                        <span class="step-text"><strong>weather.gov</strong> - Official US government weather service</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">📺</span>
+                        <span class="step-text"><strong>Your local TV station's website</strong> - They know your area best</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">📱</span>
+                        <span class="step-text"><strong>Weather app on your phone</strong> - Usually very accurate for your location</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">🔍</span>
+                        <span class="step-text"><strong>Search tip:</strong> Try "weather [your city] [your state]" for specific forecasts</span>
+                    </div>
+                </div>
+                ⚡ <strong>For severe weather:</strong> Always check official sources like weather.gov or local emergency services!
+            `;
+        }
+
+        if (message.includes('find reliable news') || message.includes('news sources')) {
+            return `
+                <strong>Here's how to find trustworthy news:</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">📰</span>
+                        <span class="step-text"><strong>Established sources:</strong> BBC, NPR, Reuters, AP News, your local newspaper</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">📺</span>
+                        <span class="step-text"><strong>Broadcast news:</strong> Major TV networks' websites (CBS, NBC, ABC, etc.)</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">🔍</span>
+                        <span class="step-text"><strong>Check multiple sources:</strong> If it's big news, several outlets will cover it</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">⏰</span>
+                        <span class="step-text"><strong>Watch for updates:</strong> Breaking news often gets corrected as more info comes in</span>
+                    </div>
+                </div>
+                🚫 <strong>Avoid:</strong> Sites that only share dramatic headlines or ask you to share before reading!
+            `;
+        }
+
+        if (message.includes('fact-check information') || message.includes('fact-check')) {
+            return `
+                <strong>Smart thinking! Here's how to fact-check what you find:</strong>
+                <div class="step-guide">
+                    <div class="step">
+                        <span class="step-number">🔍</span>
+                        <span class="step-text"><strong>Search for it elsewhere:</strong> See if other reliable sources say the same thing</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">✅</span>
+                        <span class="step-text"><strong>Use fact-checking sites:</strong> snopes.com, factcheck.org, politifact.com</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">📅</span>
+                        <span class="step-text"><strong>Check the date:</strong> Old news sometimes gets shared as if it's current</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">🤔</span>
+                        <span class="step-text"><strong>Ask yourself:</strong> Does this seem too shocking or amazing to be true?</span>
+                    </div>
+                </div>
+                💭 <strong>Remember:</strong> If something seems fishy, it probably is! Don't feel bad about being skeptical.
+            `;
+        }
+
         // Default response
         return `
             I hear what you're asking about "${userMessage}", and while I might not have the exact answer, let me share some general tips to keep you safe online:
@@ -354,6 +509,7 @@ class SeniorAI {
     
     handleQuickHelp(topic) {
         const topics = {
+            // Original topics
             'how-to-email-photos': 'How do I email photos?',
             'how-to-video-call': 'How do I make a video call?',
             'online-shopping': 'How do I shop online safely?',
@@ -361,12 +517,30 @@ class SeniorAI {
             'find-recipes': 'How do I find recipes online?',
             'scam-prevention': 'How do I avoid scams?',
             'basic-computer': 'How do I use a computer?',
-            'internet-basics': 'What are internet basics?'
+            'internet-basics': 'What are internet basics?',
+
+            // New search-related topics
+            'how-to-search': 'How do I search effectively?',
+            'search-tips': 'What are some advanced search tips?',
+            'change-search-engine': 'How do I change my search engine?',
+            'evaluate-sources': 'How do I evaluate if a source is reliable?',
+
+            // Weather-specific topics
+            'weather-search-tips': 'How do I find accurate weather information?',
+            'bookmark-weather': 'How do I bookmark weather websites?',
+
+            // Recipe-specific topics
+            'recipe-search-tips': 'How do I find good recipes online?',
+            'print-recipes': 'How do I print recipes from websites?',
+
+            // News-specific topics
+            'news-search-tips': 'How do I find reliable news sources?',
+            'fact-check-tips': 'How do I fact-check information I find online?'
         };
-        
+
         const question = topics[topic] || 'Can you help me?';
         this.addMessage(question, 'user');
-        
+
         setTimeout(async () => {
             const response = await this.generateResponse(question);
             this.addMessage(response, 'ai');
@@ -406,9 +580,31 @@ class SeniorAI {
     }
     
     async performWebSearch(query) {
-        // We guide users to search engines rather than providing filtered results
-        // This approach avoids API dependencies, bias, and teaches digital literacy
-        return this.getSearchGuidance(query);
+        try {
+            // Use a free search API to get actual results
+            const searchUrl = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=demo&num=4`;
+
+            const response = await fetch(searchUrl);
+            if (!response.ok) {
+                throw new Error('Search API failed');
+            }
+
+            const data = await response.json();
+
+            if (data.organic_results && data.organic_results.length > 0) {
+                return {
+                    results: data.organic_results.slice(0, 3),
+                    query: query,
+                    searchEngine: this.getSearchEngineInfo(this.settings.defaultSearchEngine)
+                };
+            }
+
+            throw new Error('No results found');
+        } catch (error) {
+            console.log('Search API error, falling back to guidance:', error);
+            // Fallback to guidance if API fails
+            return this.getSearchGuidance(query);
+        }
     }
 
 
@@ -420,6 +616,87 @@ class SeniorAI {
             isGuidance: true,
             query: query
         };
+    }
+
+    formatSearchResults(searchResult) {
+        let resultsHtml = `<strong>Great! Here's what I found for "${searchResult.query}":</strong>`;
+
+        searchResult.results.forEach((result, index) => {
+            const title = result.title || 'No title available';
+            const snippet = result.snippet || result.description || 'No description available';
+            const link = result.link || result.url || '#';
+
+            resultsHtml += `
+                <div class="search-result">
+                    <h4><a href="${link}" target="_blank" rel="noopener">${title}</a></h4>
+                    <p>${snippet}</p>
+                    <p><small><a href="${link}" target="_blank" rel="noopener">${link}</a></small></p>
+                </div>
+            `;
+        });
+
+        resultsHtml += `
+            <div class="search-tips">
+                <p>💡 <strong>Want more results?</strong> Try searching on ${searchResult.searchEngine.name} directly at <strong>${searchResult.searchEngine.url}</strong></p>
+                <p>🔍 <strong>Need help?</strong> Check out the updated help topics on the left for search tips!</p>
+            </div>
+        `;
+
+        return resultsHtml;
+    }
+
+    updateQuickHelpForSearch(query) {
+        const helpContainer = document.querySelector('.help-buttons');
+        if (!helpContainer) return;
+
+        // Determine the type of search to provide relevant help
+        const message = query.toLowerCase();
+        let helpTopics = [];
+
+        if (message.includes('weather')) {
+            helpTopics = [
+                { id: 'how-to-search', text: 'How to Search Effectively', topic: 'how-to-search' },
+                { id: 'weather-tips', text: 'Weather Search Tips', topic: 'weather-search-tips' },
+                { id: 'change-search-engine', text: 'Change Search Engine', topic: 'change-search-engine' },
+                { id: 'bookmark-weather', text: 'Bookmark Weather Sites', topic: 'bookmark-weather' }
+            ];
+        } else if (message.includes('recipe') || message.includes('cook') || message.includes('food')) {
+            helpTopics = [
+                { id: 'how-to-search', text: 'How to Search Effectively', topic: 'how-to-search' },
+                { id: 'recipe-tips', text: 'Finding Good Recipes', topic: 'recipe-search-tips' },
+                { id: 'change-search-engine', text: 'Change Search Engine', topic: 'change-search-engine' },
+                { id: 'print-recipes', text: 'How to Print Recipes', topic: 'print-recipes' }
+            ];
+        } else if (message.includes('news') || message.includes('current')) {
+            helpTopics = [
+                { id: 'how-to-search', text: 'How to Search Effectively', topic: 'how-to-search' },
+                { id: 'news-tips', text: 'Finding Reliable News', topic: 'news-search-tips' },
+                { id: 'change-search-engine', text: 'Change Search Engine', topic: 'change-search-engine' },
+                { id: 'fact-check', text: 'How to Fact-Check', topic: 'fact-check-tips' }
+            ];
+        } else {
+            // General search help topics
+            helpTopics = [
+                { id: 'how-to-search', text: 'How to Search Better', topic: 'how-to-search' },
+                { id: 'search-tips', text: 'Advanced Search Tips', topic: 'search-tips' },
+                { id: 'change-search-engine', text: 'Change Search Engine', topic: 'change-search-engine' },
+                { id: 'evaluate-sources', text: 'Evaluate Sources', topic: 'evaluate-sources' }
+            ];
+        }
+
+        // Update the help buttons
+        helpContainer.innerHTML = '';
+        helpTopics.forEach(topic => {
+            const button = document.createElement('button');
+            button.className = 'help-btn';
+            button.setAttribute('data-topic', topic.topic);
+            button.textContent = topic.text;
+            button.addEventListener('click', (e) => {
+                const topic = e.target.getAttribute('data-topic');
+                this.handleQuickHelp(topic);
+            });
+            helpContainer.appendChild(button);
+        });
     }
 
     getEnhancedGuidance(query, searchResult) {
@@ -458,12 +735,19 @@ class SeniorAI {
     }
 
     async handleSearchQuery(query) {
-        // Get search guidance
+        // Get search results or guidance
         const searchResult = await this.performWebSearch(query);
 
-        if (searchResult && searchResult.isGuidance) {
-            // Provide step-by-step search guidance
-            return this.getEnhancedGuidance(query, searchResult);
+        if (searchResult) {
+            if (searchResult.results) {
+                // Display actual search results
+                this.updateQuickHelpForSearch(query);
+                return this.formatSearchResults(searchResult);
+            } else if (searchResult.isGuidance) {
+                // Provide step-by-step search guidance
+                this.updateQuickHelpForSearch(query);
+                return this.getEnhancedGuidance(query, searchResult);
+            }
         }
 
         // Fallback to instructional responses if search fails
