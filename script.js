@@ -193,6 +193,7 @@ class SeniorAI {
 
         // Check if this is a search-like query (questions about facts, weather, etc.)
         if (this.isSearchQuery(message)) {
+            console.log('Search query detected:', userMessage);
             return await this.handleSearchQuery(userMessage);
         }
         
@@ -764,15 +765,19 @@ class SeniorAI {
     }
 
     async handleSearchQuery(query) {
+        console.log('handleSearchQuery called with:', query);
         // Get search results or guidance
         const searchResult = await this.performWebSearch(query);
+        console.log('performWebSearch returned:', searchResult);
 
         if (searchResult) {
             if (searchResult.results) {
+                console.log('Formatting search results');
                 // Display actual search results
                 this.updateQuickHelpForSearch(query);
                 return this.formatSearchResults(searchResult);
             } else if (searchResult.isGuidance) {
+                console.log('Using enhanced guidance');
                 // Provide step-by-step search guidance
                 this.updateQuickHelpForSearch(query);
                 return this.getEnhancedGuidance(query, searchResult);
